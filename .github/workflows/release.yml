@@ -6,7 +6,7 @@ on:
       - "v*"
 
 permissions:
-  contents: write
+  contents: read
   id-token: write
 
 jobs:
@@ -18,6 +18,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -26,6 +28,8 @@ jobs:
 
       - name: Run tests
         run: bundle exec rake test
+        env:
+          GEM_VERSION: ${{ github.ref_name }}
 
   publish:
     needs: test
@@ -33,19 +37,27 @@ jobs:
     environment: rubygems
 
     permissions:
-      contents: write
+      contents: read
       id-token: write
 
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: "3.3"
           bundler-cache: true
 
+      - name: Configure RubyGems credentials
+        uses: rubygems/configure-rubygems-credentials@main
+
+      - name: Set version from tag
+        run: echo "GEM_VERSION=${GITHUB_REF_NAME#v}" >> "$GITHUB_ENV"
+
       - name: Build gem
         run: gem build kiriminaja.gemspec
 
       - name: Publish to RubyGems
-        uses: rubygems/release-gem@v1
+        run: gem push kiriminaja-*.gem
