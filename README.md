@@ -45,12 +45,12 @@ provinces = client.address.provinces
 
 ## Config Options
 
-| Option        | Type           | Default              | Description                            |
-| ------------- | -------------- | -------------------- | -------------------------------------- |
-| `env`         | `String`       | `ENV_SANDBOX`        | Target environment                     |
-| `api_key`     | `String`       | —                    | Your KiriminAja API key                |
-| `base_url`    | `String`       | Derived from `env`   | Override the base URL                  |
-| `http_client` | duck-typed     | auto-created         | Custom HTTP client (proxy / test mock) |
+| Option        | Type       | Default            | Description                            |
+| ------------- | ---------- | ------------------ | -------------------------------------- |
+| `env`         | `String`   | `ENV_SANDBOX`      | Target environment                     |
+| `api_key`     | `String`   | —                  | Your KiriminAja API key                |
+| `base_url`    | `String`   | Derived from `env` | Override the base URL                  |
+| `http_client` | duck-typed | auto-created       | Custom HTTP client (proxy / test mock) |
 
 ```ruby
 # Custom base URL
