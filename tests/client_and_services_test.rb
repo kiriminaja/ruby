@@ -123,20 +123,20 @@ class TestCoverageArea < Minitest::Test
       weight: 1000,
       item_value: 50000,
       insurance: 0,
-      courier: ["jne", "jnt"],
+      courier: [KiriminAja::Types::ExpressService::JNE, "other"],
     )
     client.coverage_area.pricing_express(payload)
     assert_includes http.calls[0].uri.to_s, "/api/mitra/v6.1/shipping_price"
     assert_equal "POST", http.calls[0].method
     assert_equal "application/json", http.calls[0].headers["content-type"]
     body = JSON.parse(http.calls[0].body)
-    assert_equal({ "origin" => 1, "destination" => 2, "weight" => 1000, "item_value" => 50000, "insurance" => 0, "courier" => ["jne", "jnt"] }, body)
+    assert_equal({ "origin" => 1, "destination" => 2, "weight" => 1000, "item_value" => 50000, "insurance" => 0, "courier" => ["jne", "other"] }, body)
   end
 
   def test_pricing_instant
     client, http = make_client
     payload = KiriminAja::Types::PricingInstantPayload.new(
-      service: [KiriminAja::Types::InstantService::GOSEND],
+      service: [KiriminAja::Types::InstantService::GOSEND, "other"],
       item_price: 10000,
       origin: KiriminAja::Types::PricingInstantLocationPayload.new(lat: -6.2, long: 106.8, address: "A"),
       destination: KiriminAja::Types::PricingInstantLocationPayload.new(lat: -6.21, long: 106.81, address: "B"),
