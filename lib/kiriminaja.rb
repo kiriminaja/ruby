@@ -3,8 +3,11 @@
 require_relative "kiriminaja/client"
 
 module KiriminAja
-  VERSION = ENV.fetch("GEM_VERSION") {
-    tag = `git describe --tags --abbrev=0 2>/dev/null`.strip
-    tag.start_with?("v") ? tag[1..] : "0.0.0"
-  }
+  VERSION = begin
+    v = ENV.fetch("GEM_VERSION") {
+      `git describe --tags --abbrev=0 2>/dev/null`.strip
+    }
+    v = v.sub(/\Av/, "")
+    v.empty? ? "0.0.0" : v
+  end
 end
