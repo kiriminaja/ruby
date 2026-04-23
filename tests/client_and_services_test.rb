@@ -338,6 +338,19 @@ class TestCourier < Minitest::Test
 end
 
 # ---------------------------------------------------------------------------
+# Credit
+# ---------------------------------------------------------------------------
+
+class TestCredit < Minitest::Test
+  def test_balance
+    client, http = make_client
+    client.credit.balance
+    assert_includes http.calls[0].uri.to_s, "/api/mitra/v6.2/credit/balance"
+    assert_equal "GET", http.calls[0].method
+  end
+end
+
+# ---------------------------------------------------------------------------
 # Pickup
 # ---------------------------------------------------------------------------
 

@@ -259,6 +259,15 @@ client.courier.set_whitelist_services(["jne_reg", "jne_yes"])
 
 ---
 
+### Credit
+
+```ruby
+# Get the current KiriminAja credit balance
+client.credit.balance
+```
+
+---
+
 ### Pickup Schedules
 
 ```ruby

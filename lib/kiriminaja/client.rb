@@ -9,13 +9,14 @@ require_relative "types/order"
 require_relative "services/address/address"
 require_relative "services/coverage_area/coverage_area"
 require_relative "services/courier/courier"
+require_relative "services/credit/credit"
 require_relative "services/order/order"
 require_relative "services/payment/payment"
 require_relative "services/pickup/pickup"
 
 module KiriminAja
   class Client
-    attr_reader :address, :coverage_area, :courier, :order, :payment, :pickup
+    attr_reader :address, :coverage_area, :courier, :credit, :order, :payment, :pickup
 
     def initialize(env: Config::ENV_SANDBOX, api_key: nil, base_url: nil, http_client: nil)
       config = Config::ClientConfig.new(
@@ -29,6 +30,7 @@ module KiriminAja
       @address = Services::AddressService.new(http)
       @coverage_area = Services::CoverageAreaService.new(http)
       @courier = Services::CourierService.new(http)
+      @credit = Services::CreditService.new(http)
       @order = Services::OrderService.new(http)
       @payment = Services::PaymentService.new(http)
       @pickup = Services::PickupService.new(http)
