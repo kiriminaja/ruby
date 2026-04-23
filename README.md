@@ -168,6 +168,23 @@ client.order.express.request_pickup(
         cod: 0,
         package_type_id: 7,
         item_name: "TEST Item name",
+        # `items` is optional. When provided, it lists the individual
+        # items inside the package. `item_value` is still required.
+        items: [
+          KiriminAja::Types::RequestPickupItem.new(
+            name: "Kaos Polos",
+            price: 125000,
+            qty: 2,
+            weight: 260,
+            width: 4,
+            length: 4,
+            height: 4,
+            metadata: KiriminAja::Types::RequestPickupItemMetadata.new(
+              sku: "KP-001",
+              variant_label: "Merah / L",
+            ),
+          ),
+        ],
       ),
     ],
   )

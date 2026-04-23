@@ -2,20 +2,66 @@
 
 module KiriminAja
   module Types
+    class RequestPickupItemMetadata
+      attr_accessor :sku, :variant_label
+
+      def initialize(sku: nil, variant_label: nil)
+        @sku = sku
+        @variant_label = variant_label
+      end
+
+      def to_h
+        d = {}
+        d[:sku] = @sku unless @sku.nil?
+        d[:variant_label] = @variant_label unless @variant_label.nil?
+        d
+      end
+    end
+
+    class RequestPickupItem
+      attr_accessor :name, :price, :qty, :weight, :width, :length, :height, :metadata
+
+      def initialize(name:, price:, qty:, weight:,
+                     width: nil, length: nil, height: nil, metadata: nil)
+        @name = name
+        @price = price
+        @qty = qty
+        @weight = weight
+        @width = width
+        @length = length
+        @height = height
+        @metadata = metadata
+      end
+
+      def to_h
+        d = {
+          name: @name,
+          price: @price,
+          qty: @qty,
+          weight: @weight,
+        }
+        d[:width] = @width unless @width.nil?
+        d[:length] = @length unless @length.nil?
+        d[:height] = @height unless @height.nil?
+        d[:metadata] = @metadata.to_h unless @metadata.nil?
+        d
+      end
+    end
+
     class RequestPickupPackage
       attr_accessor :order_id, :destination_name, :destination_phone, :destination_address,
                     :destination_kecamatan_id, :weight, :width, :length, :height,
                     :item_value, :shipping_cost, :service, :service_type, :cod,
                     :package_type_id, :item_name,
                     :destination_kelurahan_id, :destination_zipcode, :qty,
-                    :insurance_amount, :drop, :note
+                    :insurance_amount, :drop, :note, :items
 
       def initialize(order_id:, destination_name:, destination_phone:, destination_address:,
                      destination_kecamatan_id:, weight:, width:, length:, height:,
                      item_value:, shipping_cost:, service:, service_type:, cod:,
                      package_type_id:, item_name:,
                      destination_kelurahan_id: nil, destination_zipcode: nil, qty: nil,
-                     insurance_amount: nil, drop: nil, note: nil)
+                     insurance_amount: nil, drop: nil, note: nil, items: nil)
         @order_id = order_id
         @destination_name = destination_name
         @destination_phone = destination_phone
@@ -38,6 +84,7 @@ module KiriminAja
         @insurance_amount = insurance_amount
         @drop = drop
         @note = note
+        @items = items
       end
 
       def to_h
@@ -65,6 +112,7 @@ module KiriminAja
         d[:insurance_amount] = @insurance_amount unless @insurance_amount.nil?
         d[:drop] = @drop unless @drop.nil?
         d[:note] = @note unless @note.nil?
+        d[:items] = @items.map(&:to_h) unless @items.nil?
         d
       end
     end

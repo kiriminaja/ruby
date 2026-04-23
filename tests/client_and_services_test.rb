@@ -202,6 +202,21 @@ class TestOrderExpress < Minitest::Test
           cod: 0,
           package_type_id: 7,
           item_name: "TEST Item name",
+          items: [
+            KiriminAja::Types::RequestPickupItem.new(
+              name: "Kaos Polos",
+              price: 125000,
+              qty: 2,
+              weight: 260,
+              width: 4,
+              length: 4,
+              height: 4,
+              metadata: KiriminAja::Types::RequestPickupItemMetadata.new(
+                sku: "KP-001",
+                variant_label: "Merah / L",
+              ),
+            ),
+          ],
         ),
       ],
     )
@@ -211,6 +226,9 @@ class TestOrderExpress < Minitest::Test
     body = JSON.parse(http.calls[0].body)
     assert_equal "Jl. Jodipati No.29", body["address"]
     assert_equal "YGL-000000019", body["packages"][0]["order_id"]
+    assert_equal 1, body["packages"][0]["items"].length
+    assert_equal "Kaos Polos", body["packages"][0]["items"][0]["name"]
+    assert_equal "KP-001", body["packages"][0]["items"][0]["metadata"]["sku"]
   end
 end
 
