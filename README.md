@@ -268,6 +268,22 @@ client.credit.balance
 
 ---
 
+### Utilities — Volumetric
+
+Estimate the smallest bounding box (length / width / height) for a
+multi-item package by trying three stacking strategies and returning the
+arrangement with the smallest volume.
+
+```ruby
+dim = KiriminAja::Utils::Volumetric.calculate([
+  { qty: 2, length: 10, width: 10, height: 2 },
+  { qty: 1, length: 5,  width: 5,  height: 5 }
+])
+# dim[:length], dim[:width], dim[:height]
+```
+
+---
+
 ### Pickup Schedules
 
 ```ruby

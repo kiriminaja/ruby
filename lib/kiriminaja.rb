@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "kiriminaja/client"
+require_relative "kiriminaja/utils/volumetric"
 
 module KiriminAja
   VERSION = begin
