@@ -268,6 +268,45 @@ client.credit.balance
 
 ---
 
+### AWB (Print Waybill)
+
+```ruby
+# Print shipping label / waybill by AWB number(s)
+client.awb.print({ awb: ["AWB123", "AWB456"] })
+# response["data"]["data"]["url"] => PDF download URL
+```
+
+---
+
+### Calculations (COD)
+
+```ruby
+# Calculate COD (Cash on Delivery) fee
+client.calculations.cod({
+  item_price: 100000,
+  data: [
+    {
+      courier_code: "jne",
+      courier_service_code: "reg",
+      shipping_cost: 10000,
+    },
+  ],
+})
+# response["results"] => array of fee breakdown per courier/service
+```
+
+---
+
+### Profile
+
+```ruby
+# Get member profile and metadata
+client.profile.get
+# response["results"]["id"], response["results"]["email"], etc.
+```
+
+---
+
 ### Utilities — Volumetric
 
 Estimate the smallest bounding box (length / width / height) for a
