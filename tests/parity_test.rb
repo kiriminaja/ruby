@@ -18,8 +18,8 @@ class ParityHTTP
 end
 
 class TestPHPParity < Minitest::Test
-  def client_for(body = { "status" => true }, **options)
-    http = ParityHTTP.new(body, **options)
+  def client_for(body = { "status" => true }, code: "200")
+    http = ParityHTTP.new(body, code: code)
     [KiriminAja::Client.new(http_client: http, api_key: "key"), http]
   end
 
